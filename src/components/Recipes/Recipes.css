@@ -13,21 +13,24 @@
 .card {
     width: calc(25% - 40px); 
     border-radius: 20px;
-    overflow: hidden;
+    /* overflow: hidden; */
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
     margin: 20px;
 }
 
+.card-recipe:hover {
+    transform: scale(1.05);
+}
+/* 
 .card img {
     width: 100%; 
-    border-radius: 20px;
-}
+} */
 
-.card-content {
+/* .card-content {
     text-align: center;
     margin: 5px;
     padding-bottom: 5px;
-}
+} */
 
 @media (max-width: 1024px) {
     .card {
@@ -38,11 +41,3 @@
     }
 }
 
-/* @media (max-width: 600px) {
-    .card {
-        width: calc(100% - 40px); 
-    }
-    .container {
-        max-width: 540px;
-    }
-} */
