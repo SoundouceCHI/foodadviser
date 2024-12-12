@@ -1,4 +1,4 @@
-.group {
+.group-topRecipes {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -7,7 +7,7 @@
     margin: 20px;
 }
 
-.card {
+.card-topRecipes {
     display: flex;
     flex-direction: row; 
     background-color: white;
@@ -16,95 +16,98 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: calc(50% - 20px); 
     transition: background-color 0.3s ease;
+    margin-left: 10px; 
+    margin-bottom : 10px;
 }
 
-.card:hover {
+.card-topRecipes:hover {
     background-color: #f1f5f9; 
 }
 
-.card img {
+.card-topRecipes img {
     object-fit: cover;
     flex: 0 0 40%; 
     height: auto;
+    width: 250px;
+height: 250px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
 
-.card .description {
-    padding: 16px;
+.card-topRecipes .description-topRecipes {
+    padding-left: 16px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex: 1; 
 }
-/* .card img {
-    object-fit: cover;
-    width: 40%;
-    height: auto;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
 
-.card .description {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 60%;
-} */
-
-.card .description .cardTitle {
+.card-topRecipes .description-topRecipes .cardTitle-topRecipes {
     font-size: 1.5rem; 
     font-weight: bold;
     color: #1a202c; 
     margin-bottom: 8px;
 }
 
-.card .description .detail {
+.card-topRecipes .description-topRecipes .detail-topRecipes {
     font-size: 1rem;
     color: #4a5568; 
     margin-bottom: 8px;
 }
 
-.card .description .text-muted {
+.card-topRecipes .description-topRecipes .text-muted {
     font-size: 0.875rem;
     color: #a0aec0; 
+    padding-bottom: 5px;
+}
+h2 {
+    margin: 20px;
 }
 
-
 @media (max-width: 768px) {
-    .group {
+    .card-container {
+        justify-content: left;
+        margin : 20px; 
+    }
+    h2 {
+        margin: 20px;
+    }
+    .group-topRecipes {
         display: block;
+        margin: 0;
+        padding: 0;
     }
 
-    .card {
+    .card-topRecipes {
         margin-bottom: 20px;
+        width: 100%;
     }
 
-    .card:nth-child(n+2) {
+    .card-topRecipes:nth-child(n+2) {
         display: none; /* Hide all but the first card */
     }
 
     
-    .card img {
-        width: 100%;
+    .card-topRecipes img {
+        width: 154px;
         height: auto;
-        border-radius: 8px 8px 0 0;
+        border-radius: 8px 0 0 8px; 
+        object-fit: cover;
     }
 
-    .card .description {
+    .card-topRecipes .description-topRecipes {
         width:100%; 
     }
 
-    .card .description .cardTitle {
+    .card-topRecipes .description-topRecipes .cardTitle-topRecipes {
         font-size: 1.25rem;
     }
 
-    .card .description .detail {
+    .card-topRecipes .description-topRecipes .detail-topRecipes {
         font-size: 0.9rem; 
     }
 
-    .card .description .text-muted {
+    .card-topRecipes .description-topRecipes .text-muted {
         font-size: 0.75rem; 
     }
 }
