@@ -2,7 +2,12 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.margin-top {
     margin-top: 30px;
+    margin-left: 23px;
 }
 
 .card {
@@ -20,16 +25,24 @@
 
 .card-content {
     text-align: center;
+    margin: 5px;
+    padding-bottom: 5px;
 }
 
 @media (max-width: 1024px) {
     .card {
         width: calc(50% - 40px); 
     }
+    .container {
+        max-width: 964px;
+    }
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
     .card {
         width: calc(100% - 40px); 
     }
-}
+    .container {
+        max-width: 540px;
+    }
+} */
