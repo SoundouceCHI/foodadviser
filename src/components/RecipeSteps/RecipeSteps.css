@@ -1,0 +1,45 @@
+.recipe-step-list {
+    font-size: 14px;
+    font-family: 'Source Sans Pro', sans-serif;
+    box-sizing: border-box;
+    margin-top: 30px;
+    margin-bottom: 5px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recipe-step-list__container {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .recipe-step-list__container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .recipe-step-list__head {
+    font-size: 16px;
+    font-weight: bold;
+    color: #45AA6D; 
+    margin-bottom: 10px;
+  }
+  
+  .recipe-step-list__head span {
+    color: #45AA6D; 
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  
+  .recipe-step-list__container p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  
