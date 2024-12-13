@@ -6,33 +6,33 @@ export default function Ingredients() {
   return (
     <>
         <div className="container">
-            <h2 className="margin-top">Vous avez comme ingrédients :</h2>
-            <div className="card-container">
-                <div className="card">
+            <h2 className="title-ingredients">Vous avez comme ingrédients :</h2>
+            <div className="card-ingredient-container">
+                <div className="card-ingredient">
                     <img src={orange} alt="" className="card-image"/>
-                    <div className="card-content">
-                        <h3>Toasts à la crème de saumon fumé</h3>
+                    <div className="card-ingredient-content">
+                        <h3>Orange</h3>
                         <button className="ingredient-btn"><FaMinus /></button>
                     </div>
                 </div> 
-                <div className="card">
+                <div className="card-ingredient">
                     <img src={orange} alt="" className="card-image"/>
                     <div className="card-content">
-                        <h3>Toasts à la crème de saumon fumé</h3>
+                        <h3>Orange</h3>
                         <button className="ingredient-btn"><FaMinus /></button>
                     </div>
                 </div> 
-                <div className="card">
+                <div className="card-ingredient">
                     <img src={orange} alt="" className="card-image"/>
                     <div className="card-content">
-                        <h3>Toasts à la crème de saumon fumé</h3>
+                        <h3>Orange</h3>
                         <button className="ingredient-btn"><FaMinus /></button>
                     </div>
                 </div> 
-                <div className="card">
+                <div className="card-ingredient">
                     <img src={orange} alt="" className="card-image"/>
                     <div className="card-content">
-                        <h3>Toasts à la crème de saumon fumé</h3>
+                        <h3>Orange</h3>
                         <button className="ingredient-btn"><FaMinus /></button>
                     </div>
                 </div> 
