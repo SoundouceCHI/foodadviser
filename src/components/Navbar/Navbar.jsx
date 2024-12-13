@@ -24,7 +24,9 @@ function Navbar() {
 					<NavLink to={"/ingredients"} className="a">Les ingredients</NavLink>
 				</div>
 				<div className="connexion-container">
-					<button>Connexion</button>
+					<NavLink to={"/signin"}>
+						<button>Connexion</button>
+					</NavLink>
 				</div>
 				<button
 					className="nav-btn nav-close-btn"
