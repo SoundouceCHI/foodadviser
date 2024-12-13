@@ -3,7 +3,7 @@ import './App.css'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import Recipes from './components/Recipes/Recipes'
-import Ingredients from './components/Ingredients/Ingredients'
+import FridgeIngredients from './components/FridgeIngredients/FridgeIngredients'
 
 
 function App() {
@@ -11,8 +11,8 @@ function App() {
   return (
     <>
      <Navbar/>
-     <Recipes/>
-     <Ingredients/>
+      <Recipes/>
+      <FridgeIngredients />
      <Footer/>
     </>
   )
