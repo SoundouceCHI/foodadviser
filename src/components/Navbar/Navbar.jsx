@@ -17,12 +17,12 @@ function Navbar() {
             <img src={logo} alt="Logo" className="logo"/>
 			</div>
 			<nav ref={navRef}>
-				<nav className="nav-links">
-					<NavLink to={"/"}>Accueil</NavLink>
-					<NavLink to={"/recipes"}>Recettes</NavLink>
-					<NavLink to={"/toprecipes"}>Les meilleurs recettes</NavLink>
-					<NavLink to={"/ingredients"}>Les ingredients</NavLink>
-				</nav>
+				<div className="nav-links">
+					<NavLink to={"/"} className="a">Accueil</NavLink>
+					<NavLink to={"/recipes"} className="a">Recettes</NavLink>
+					<NavLink to={"/toprecipes"} className="a">Les meilleurs recettes</NavLink>
+					<NavLink to={"/ingredients"} className="a">Les ingredients</NavLink>
+				</div>
 				<div className="connexion-container">
 					<button>Connexion</button>
 				</div>
