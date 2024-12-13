@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./Navbar.css";
 import logo from "../../assets/foodAdviser_logo.png";
+import { NavLink } from "react-router-dom"
 
 function Navbar() {
 	const navRef = useRef();
@@ -16,12 +17,12 @@ function Navbar() {
             <img src={logo} alt="Logo" className="logo"/>
 			</div>
 			<nav ref={navRef}>
-				<div className="nav-links">
-					<a href="/#">Accueil</a>
-					<a href="/#">Recettes</a>
-					<a href="/#">Recette du jour</a>
-					<a href="/#">Actus</a>
-				</div>
+				<nav className="nav-links">
+					<NavLink to={"/"}>Accueil</NavLink>
+					<NavLink to={"/recipes"}>Recettes</NavLink>
+					<NavLink to={"/toprecipes"}>Les meilleurs recettes</NavLink>
+					<NavLink to={"/ingredients"}>Les ingredients</NavLink>
+				</nav>
 				<div className="connexion-container">
 					<button>Connexion</button>
 				</div>
