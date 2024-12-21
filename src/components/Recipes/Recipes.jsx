@@ -1,54 +1,65 @@
 import React, { useEffect, useState } from "react";
-import { getRecipesList } from "../../services/api"; // Chemin vers ton fichier api.jsx
+import { getRecipesList } from "../../services/api"; 
 import toast from "../../assets/toast.webp";
 import "./Recipes.css";
+import { Link } from "react-router-dom";
 
-export default function Recipes() {
-  const [recipes, setRecipes] = useState([]); // État pour stocker les recettes
-  const [error, setError] = useState(null);   // État pour gérer les erreurs
+export default function Recipes({ limit, random }) { 
+  const [recipes, setRecipes] = useState([]); 
+  const [error, setError] = useState(null);   
 
-  // Fonction pour charger les recettes depuis l'API
   const fetchRecipes = async () => {
     try {
-      const data = await getRecipesList(10); // Récupère 10 recettes (ou nombre souhaité)
+      const data = await getRecipesList(100); 
       if (data.error) {
         setError(data.error);
       } else {
-        setRecipes(data.results || []); // Stocke les résultats dans l'état
+        setRecipes(data.results || []); 
       }
     } catch (err) {
       setError("Erreur de connexion au serveur");
     }
   };
 
-  // Appel à l'API lorsque le composant est monté
+  const getRandomRecipes = (recipes, count) => {
+    const shuffled = [...recipes].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
+
   useEffect(() => {
     fetchRecipes();
   }, []);
 
+  // Sélectionne les recettes à afficher
+  let displayedRecipes = recipes;
+  if (random && limit && recipes.length > 0) {
+    displayedRecipes = getRandomRecipes(recipes, limit);
+  } else if (limit) {
+    displayedRecipes = recipes.slice(0, limit);
+  }
   return (
-    <>
-      <div className="container">
-        <h2 className="title-recipes">Nos recettes</h2>
-        {error && <p className="error-message">{error}</p>}
-        <div className="card-container">
-          {recipes.length > 0 ? (
-            recipes.map((recipe, index) => (
-              <div key={index} className="card card-recipe">
-                <img
-                  src={recipe.image || toast} // Image par défaut si absente
-                  alt={recipe.title || "Recette"}
-                />
-                <div className="card-content">
+    <div className="container">
+      <h2 className="title-recipes">Nos recettes</h2>
+      {error && <p className="error-message">{error}</p>}
+      <div className="card-container">
+        {displayedRecipes.length > 0 ? (
+          displayedRecipes.map((recipe, index) => (
+            <div key={index} className="card card-recipe">
+              <img
+                src={recipe.image || toast}
+                alt={recipe.title || "Recette"}
+              />
+              <div className="card-content">
+                <Link key={recipe.id} to={`/recipes/${recipe.id}`}>
                   <h3>{recipe.title}</h3>
-                </div>
+                </Link>
               </div>
-            ))
-          ) : (
-            <p>Chargement des recettes...</p>
-          )}
-        </div>
+            </div>
+          ))
+        ) : (
+          <p>Chargement des recettes...</p>
+        )}
       </div>
-    </>
+    </div>
   );
 }
