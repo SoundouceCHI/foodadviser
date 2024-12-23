@@ -9,7 +9,7 @@ import TopRecipes from './components/TopRecipes/TopRecipes'
 import SignIn from './components/SignIn/SignIn'
 import Register from './components/Register/Register'
 import DetailRecipe from "./pages/DetailRecipe";
-
+import FridgeIngredients from './components/FridgeIngredients/FridgeIngredients'
 
 function App() {
 
@@ -24,6 +24,7 @@ function App() {
         <Route path="/toprecipes" element={<TopRecipes />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/recipeSuggestion" element={<FridgeIngredients />} />
       </Routes>
      </BrowserRouter>
      <Footer/>

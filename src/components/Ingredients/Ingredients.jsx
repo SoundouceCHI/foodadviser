@@ -1,5 +1,7 @@
 import { FaMinus } from "react-icons/fa";
 import "./Ingredients.css";
+import { get_all_ingredients } from "../../services/ingredient_service";
+import { useEffect, useState } from "react";
 
 export default function Ingredients({ ingredients }) {
   if (!ingredients || ingredients.length === 0) {

@@ -1,9 +1,31 @@
+import { useContext, useEffect, useState } from "react";
 import fridge from "../../assets/fridge.jpg";
 import "./FridgeIngredients.css"
 import Ingredients from "../Ingredients/Ingredients";
+import { AppContext } from '../../context/AppContext';
+import { categorizeIngredients } from "../../utils/ingredientsUtils";
 
 export default function FridgeIngredients() {
-    return (
+
+  const { sharedVariable, loading, error } = useContext(AppContext);
+  const [categorized, setCategorized] = useState({ inFridge: [], toBuy: [] });
+
+  //ingredient in fridge 
+  //must be returned from backend 
+  const ingIA = [
+    { name: "peppers" },
+    { name: "salmon" },
+    { name: "lime" },
+  ];  
+
+  useEffect(() => {
+    if (!loading && !error) {
+      const result = categorizeIngredients(sharedVariable, ingIA);
+      setCategorized(result);
+    }
+  }, [sharedVariable, loading, error]);
+  
+  return (
     
     <div className="fridge-page">
           <div className="photo-section">
@@ -16,7 +38,16 @@ export default function FridgeIngredients() {
       </div>
           </div>
           <div className="ingredients-section">
-            <Ingredients />
+            {loading ? (
+              <div className="loading">Chargement...</div>
+            ) : error ? (
+              <div className="error">Erreur : {error.message}</div>
+            ) : (
+              <>
+                <Ingredients ingredients={categorized.inFridge} />
+              </>
+             
+            )}
           </div>
         </div>
     );
