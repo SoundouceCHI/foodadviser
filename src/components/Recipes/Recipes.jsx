@@ -14,7 +14,7 @@ export default function Recipes({ limit, random }) {
       if (data.error) {
         setError(data.error);
       } else {
-        setRecipes(data.results || []); 
+        setRecipes(data.recipes || []); 
       }
     } catch (err) {
       setError("Erreur de connexion au serveur");
@@ -46,11 +46,11 @@ export default function Recipes({ limit, random }) {
           displayedRecipes.map((recipe, index) => (
             <div key={index} className="card card-recipe">
               <img
-                src={recipe.image || toast}
+                src={recipe.image_url || toast}
                 alt={recipe.title || "Recette"}
               />
               <div className="card-content">
-                <Link key={recipe.id} to={`/recipes/${recipe.id}`}>
+                <Link key={recipe.id_recipe} to={`/recipes/${recipe.id_recipe}`}>
                   <h3>{recipe.title}</h3>
                 </Link>
               </div>
