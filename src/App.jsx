@@ -14,7 +14,7 @@ import FridgeIngredients from './components/FridgeIngredients/FridgeIngredients'
 function App() {
 
   return (
-    <>
+    <div className="app-container">
      <BrowserRouter>
      <Navbar/>
       <Routes>
@@ -28,7 +28,7 @@ function App() {
       </Routes>
      </BrowserRouter>
      <Footer/>
-    </>
+    </div>
   )
 }
 

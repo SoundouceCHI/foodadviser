@@ -44,6 +44,7 @@ export default function FridgeIngredients() {
               <div className="error">Erreur : {error.message}</div>
             ) : (
               <>
+                <h2>Vous avez comme ingrédient : </h2>
                 <Ingredients ingredients={categorized.inFridge} />
               </>
              

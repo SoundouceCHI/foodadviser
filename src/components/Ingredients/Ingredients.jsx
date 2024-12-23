@@ -13,12 +13,12 @@ export default function Ingredients({ ingredients }) {
       {ingredients.map((ingredient, index) => (
         <div className="card-ingredient" key={index}>
           <img
-            src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}
-            alt={ingredient.name || ingredient.title}
+            src={ingredient.image_url}
+            alt={ingredient.original || ingredient.name}
             className="card-image"
           />
           <div className="card-ingredient-content">
-            <h3>{ingredient.original || ingredient.title}</h3>
+            <h3>{ingredient.original || ingredient.name}</h3>
             <button className="ingredient-btn">
               <FaMinus />
             </button>
