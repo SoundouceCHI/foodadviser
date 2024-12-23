@@ -23,3 +23,16 @@ export const getRecipesList = async (number = 10) => {
     return { error: error.message };
   }
 };
+
+export const getRecipesSuggestionList = async (ingredientList, number=8)=> {
+  try {
+    const ingredients= ingredientList.join(',+')
+    const url = `${API_BASE_URL}/recipesSuggestion/?list=${ingredients}&number=${number}`;
+    console.log("Request URL:", url);
+    const response = await axios.get(url)
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching recipes list:', error);
+    return { error: error.message };
+  }
+}

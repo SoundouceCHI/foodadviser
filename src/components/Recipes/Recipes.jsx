@@ -4,10 +4,10 @@ import toast from "../../assets/toast.webp";
 import "./Recipes.css";
 import { Link } from "react-router-dom";
 
-export default function Recipes({ limit, random }) { 
+export default function Recipes({ limit, random, listRecipes=[]}) { 
   const [recipes, setRecipes] = useState([]); 
   const [error, setError] = useState(null);   
-
+  console.log(listRecipes.length)
   const fetchRecipes = async () => {
     try {
       const data = await getRecipesList(100); 
@@ -27,16 +27,23 @@ export default function Recipes({ limit, random }) {
   };
 
   useEffect(() => {
-    fetchRecipes();
-  }, []);
+    // Only fetch if the `displayedRecipes` prop is empty
+    if (listRecipes.length === 0 && recipes.length === 0) {
+      fetchRecipes();
+    }
+  }, [listRecipes, recipes]);
 
-  // Sélectionne les recettes à afficher
-  let displayedRecipes = recipes;
+  // Determine which recipes to display
+  const displayedRecipes = listRecipes.length > 0 ? listRecipes : recipes;
+
+
   if (random && limit && recipes.length > 0) {
     displayedRecipes = getRandomRecipes(recipes, limit);
   } else if (limit) {
     displayedRecipes = recipes.slice(0, limit);
   }
+  
+
   return (
     <div className="container">
       <h2 className="title-recipes">Nos recettes</h2>
