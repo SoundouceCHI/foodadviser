@@ -51,25 +51,7 @@ export default function DetailRecipe() {
   const ingredients = recipeDetails.ingredients || [];
   const steps = recipeDetails.steps || [];
 
-<<<<<<< HEAD
-  return (
-    <div className="container">
-      <h2>{recipeDetails.title}</h2>
-      <img
-        src={recipeDetails.image_url || "default_image_url.jpg"}
-        alt={recipeDetails.title}
-        className="recipe-image"
-      />
-      <h3 className="titlee">Ingrédients </h3>
-      <Ingredients ingredients={ingredients} />
-      {isSuggestionPage && (
-=======
-  // Extraire les ingrédients et les étapes depuis les détails de la recette
-  const ingredients = recipeDetails.extendedIngredients || [];
-  const steps =
-  recipeDetails.analyzedInstructions.length > 0
-    ? recipeDetails.analyzedInstructions[0].steps
-    : [];
+
 
   const ingRecipeToShop = categorizeIngredients(ingredients, ingToShop)
   const ingRecipeInFridge = categorizeIngredients(ingredients, ingInFridge)
@@ -78,14 +60,13 @@ export default function DetailRecipe() {
         <div className="container">
           <h2>{recipeDetails.title}</h2>
           <img
-            src={recipeDetails.image || "default_image_url.jpg"}
+            src={recipeDetails.image_url || "default_image_url.jpg"}
             alt={recipeDetails.title}
             className="recipe-image"
           /> 
           <h3 className="titlee">Ingrédients </h3>
           <Ingredients ingredients={ingredients} />
           {isSuggestionPage && (
->>>>>>> f741dc6 (improved accessibility of fridge and shopping list data across components)
             <>
               <h3 className="titlee">Ingrédients dans le Frigo</h3>
               <Ingredients ingredients={ingRecipeInFridge.inFridge} />
