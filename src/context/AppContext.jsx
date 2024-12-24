@@ -10,6 +10,9 @@ const AppProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);  
     const [error, setError] = useState(null);  
 
+    const [ingInFridge, setInFridge]= useState([])
+    const [ingToShop, setToShop]= useState([])
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -26,7 +29,7 @@ const AppProvider = ({ children }) => {
     }, []);  
 
     return (
-        <AppContext.Provider value={{ sharedVariable, loading, error }}>
+        <AppContext.Provider value={{ sharedVariable, loading, error, ingInFridge, ingToShop, setInFridge, setToShop}}>
             {children}
         </AppContext.Provider>
     );

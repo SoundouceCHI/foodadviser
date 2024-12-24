@@ -9,7 +9,7 @@ import Recipes from "../Recipes/Recipes";
 
 export default function FridgeIngredients() {
 
-  const { sharedVariable, loading, error } = useContext(AppContext);
+  const { sharedVariable, loading, error, setToShop, setInFridge } = useContext(AppContext);
   const [categorized, setCategorized] = useState({ inFridge: [], toBuy: [] });
   const [recipes, setRecipes] = useState([]);
   const [fetchError, setFetchError] = useState(null);
@@ -81,6 +81,8 @@ export default function FridgeIngredients() {
       };
   
       fetchRecipes();
+      setInFridge(categorized.inFridge)
+      setToShop(categorized.toBuy)
     }
   }, [categorized]);
   
@@ -106,14 +108,14 @@ export default function FridgeIngredients() {
             ) : (
               <>
                 <h2>Vous avez comme ingrédient : </h2>
-                <Ingredients ingredients={categorized.inFridge} />
+                <Ingredients ingredients={categorized.inFridge}/>
               </>
              
             )}
           </div>
         
         </div>
-          <Recipes listRecipes={recipes}/>
+          <Recipes listRecipes={recipes} previousPage='recipesSuggestion' />
           
    </>
         
