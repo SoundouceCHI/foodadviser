@@ -34,7 +34,7 @@ export default function Recipes({ limit, random, listRecipes=[]}) {
   }, [listRecipes, recipes]);
 
   // Determine which recipes to display
-  const displayedRecipes = listRecipes.length > 0 ? listRecipes : recipes;
+  let displayedRecipes = listRecipes.length > 0 ? listRecipes : recipes;
 
 
   if (random && limit && recipes.length > 0) {
