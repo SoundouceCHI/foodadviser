@@ -57,14 +57,14 @@ export default function Recipes({ limit, random, listRecipes=[]}) {
                 alt={recipe.title || "Recette"}
               />
               <div className="card-content">
-                <Link key={recipe.id_recipe} to={`/recipes/${recipe.id_recipe}`}>
+                <Link key={recipe.id_recipe} to={`/recipes/${recipe.id_recipe}?from=recipesSuggestion`}>
                   <h3>{recipe.title}</h3>
                 </Link>
               </div>
             </div>
           ))
         ) : (
-          <p>Chargement des recettes...</p>
+          <div className="loading-spinner">Chargement des recettes...</div>
         )}
       </div>
     </div>

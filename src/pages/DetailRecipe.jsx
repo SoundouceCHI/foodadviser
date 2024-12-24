@@ -4,9 +4,16 @@ import { getRecipeById } from "../services/api";
 import Ingredients from "../components/Ingredients/Ingredients.jsx";
 import RecipeSteps from "../components/RecipeSteps/RecipeSteps.jsx";
 import "../styles/DetailRecipe.css";
+import { useLocation } from 'react-router-dom';
 
 export default function DetailRecipe() {
   const { recipeId } = useParams();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const fromPage = params.get('from');
+
+  console.log('Provenance :', fromPage);
+  let isSuggestionPage = fromPage.includes('recipesSuggestion')
   const [recipeDetails, setRecipeDetails] = useState(null);
   const [error, setError] = useState(null);
 
@@ -49,6 +56,14 @@ export default function DetailRecipe() {
       />
       <h3 className="titlee">Ingrédients </h3>
       <Ingredients ingredients={ingredients} />
+      {isSuggestionPage && (
+            <>
+              <h3 className="titlee">Ingrédients dans le Frigo</h3>
+              <Ingredients ingredients={ingredients} />
+              <h3 className="titlee">Liste de course</h3>
+              <Ingredients ingredients={ingredients} />
+            </>
+      )}
       <h3 className="titlee">Étapes </h3>
       <RecipeSteps steps={steps} />
     </div>
