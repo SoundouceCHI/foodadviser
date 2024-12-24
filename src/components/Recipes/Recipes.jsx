@@ -4,10 +4,15 @@ import toast from "../../assets/toast.webp";
 import "./Recipes.css";
 import { Link } from "react-router-dom";
 
-export default function Recipes({ limit, random, listRecipes=[]}) { 
+export default function Recipes({ limit, random, listRecipes=[], previousPage=''}) { 
   const [recipes, setRecipes] = useState([]); 
   const [error, setError] = useState(null);   
   console.log(listRecipes.length)
+
+  if(previousPage.length == 0){
+    previousPage='Home'
+  }  
+
   const fetchRecipes = async () => {
     try {
       const data = await getRecipesList(100); 
@@ -57,7 +62,7 @@ export default function Recipes({ limit, random, listRecipes=[]}) {
                 alt={recipe.title || "Recette"}
               />
               <div className="card-content">
-                <Link key={recipe.id} to={`/recipes/${recipe.id}?from=recipesSuggestion`}>
+                <Link key={recipe.id} to={`/recipes/${recipe.id}?from=${previousPage}`}>
                   <h3>{recipe.title}</h3>
                 </Link>
               </div>

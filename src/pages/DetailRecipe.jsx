@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from '../context/AppContext';
 import { useParams } from "react-router-dom";
 import { getRecipeById } from "../services/api";
 import Ingredients from "../components/Ingredients/Ingredients.jsx"; "../components/Ingredients/Ingredients.jsx"; 
 import RecipeSteps from "../components/RecipeSteps/RecipeSteps.jsx"; 
 import "../styles/DetailRecipe.css"
 import { useLocation } from 'react-router-dom';
+import { categorizeIngredients } from "../utils/ingredientsUtils";
 
 export default function DetailRecipe() {
   const location = useLocation();
@@ -13,7 +15,9 @@ export default function DetailRecipe() {
 
   console.log('Provenance :', fromPage);
   let isSuggestionPage = fromPage.includes('recipesSuggestion')
-  
+
+  const { ingToShop, ingInFridge} = useContext(AppContext);
+
   const { recipeId } = useParams(); 
   const [recipeDetails, setRecipeDetails] = useState(null);
   const [error, setError] = useState(null);
@@ -57,6 +61,10 @@ export default function DetailRecipe() {
   recipeDetails.analyzedInstructions.length > 0
     ? recipeDetails.analyzedInstructions[0].steps
     : [];
+
+  const ingRecipeToShop = categorizeIngredients(ingredients, ingToShop)
+  const ingRecipeInFridge = categorizeIngredients(ingredients, ingInFridge)
+
     return (
         <div className="container">
           <h2>{recipeDetails.title}</h2>
@@ -70,9 +78,9 @@ export default function DetailRecipe() {
           {isSuggestionPage && (
             <>
               <h3 className="titlee">Ingrédients dans le Frigo</h3>
-              <Ingredients ingredients={ingredients} />
+              <Ingredients ingredients={ingRecipeInFridge.inFridge} />
               <h3 className="titlee">Liste de course</h3>
-              <Ingredients ingredients={ingredients} />
+              <Ingredients ingredients={ingRecipeToShop.toBuy} />
             </>
           )}
           <h3 className="titlee">Étapes </h3>
