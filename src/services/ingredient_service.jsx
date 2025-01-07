@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL =`${import.meta.env.API_BASE_URL}/ingredients/`
+let API_BASE_URL =`${import.meta.env.API_BASE_URL}/ingredients/`
+API_BASE_URL =`http://127.0.0.1:8000/ingredients`
 
 export const get_all_ingredients = async () => {
     try {
@@ -15,7 +16,7 @@ export const get_all_ingredients = async () => {
 
 export const get_ingredients_by_id = async (ingredient_id) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/${ingredient_id}/`);
+        const response = await axios.get(`${API_BASE_URL}/${ingredient_id}`);
         return response.data;
       } catch (error) {
         console.error('Error fetching ingredients:', error);
@@ -66,7 +67,7 @@ export const put_ingredient = async()=> {
 
 export const delete_ingredient = async(ingredient_id)=> {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/delete_ingredient/${ingredient_id}/`);
+        const response = await axios.delete(`${API_BASE_URL}/delete_ingredient/${ingredient_id}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching ingredients:', error);

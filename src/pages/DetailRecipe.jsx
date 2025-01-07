@@ -7,15 +7,21 @@ import RecipeSteps from "../components/RecipeSteps/RecipeSteps.jsx";
 import "../styles/DetailRecipe.css";
 import { useLocation } from 'react-router-dom';
 import { categorizeIngredients } from "../utils/ingredientsUtils";
+import {mapMissedIngredients} from "../utils/ingredientsUtils.jsx"
 
 export default function DetailRecipe() {
   const { recipeId } = useParams();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const fromPage = params.get('from');
+  const missedIng = params.get("missedIng")
+  ? JSON.parse(params.get("missedIng"))
+  : [];
 
-  console.log('Provenance :', fromPage);
+
   let isSuggestionPage = fromPage.includes('recipesSuggestion')
+  const [enrichedIngredients, setEnrichedIngredients] = useState([]);
+
 
   const { ingToShop, ingInFridge} = useContext(AppContext);
 
@@ -23,22 +29,27 @@ export default function DetailRecipe() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchRecipeDetails = async () => {
+    const fetchRecipeDetailsWithIngredients = async () => {
       try {
         const data = await getRecipeById(recipeId);
         if (data.error) {
           setError(data.error);
-        } else {
-          setRecipeDetails(data);
+          return 
+        } 
+
+        setRecipeDetails(data);
+        // Fetch enriched ingredients only if needed
+        if (missedIng.length > 0 && data.ingredients.length > 0) {
+          const enriched = await mapMissedIngredients(missedIng, data.ingredients);
+          setEnrichedIngredients(enriched);
         }
       } catch (err) {
-        console.error("Error fetching recipe:", err.message);
         setError("Erreur de connexion au serveur");
       }
     };
 
-    fetchRecipeDetails();
-  }, [recipeId]);
+    fetchRecipeDetailsWithIngredients();
+  }, []);
 
   if (error) {
     return <p className="error-message">{error}</p>;
@@ -48,13 +59,8 @@ export default function DetailRecipe() {
     return <p>Chargement des détails de la recette...</p>;
   }
 
-  const ingredients = recipeDetails.ingredients || [];
-  const steps = recipeDetails.steps || [];
-
-
-
-  const ingRecipeToShop = categorizeIngredients(ingredients, ingToShop)
-  const ingRecipeInFridge = categorizeIngredients(ingredients, ingInFridge)
+  const ingredients = recipeDetails.ingredients || []
+  const steps = recipeDetails.steps || [];  
 
     return (
         <div className="container">
@@ -69,9 +75,9 @@ export default function DetailRecipe() {
           {isSuggestionPage && (
             <>
               <h3 className="titlee">Ingrédients dans le Frigo</h3>
-              <Ingredients ingredients={ingRecipeInFridge.inFridge} />
+              <Ingredients ingredients={ingInFridge} />
               <h3 className="titlee">Liste de course</h3>
-              <Ingredients ingredients={ingRecipeToShop.toBuy} />
+              <Ingredients ingredients={enrichedIngredients} />
             </>
       )}
       <h3 className="titlee">Étapes </h3>

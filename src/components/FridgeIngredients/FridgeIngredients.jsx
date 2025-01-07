@@ -3,9 +3,10 @@ import fridge from "../../assets/fridge.jpg";
 import "./FridgeIngredients.css"
 import Ingredients from "../Ingredients/Ingredients";
 import { AppContext } from '../../context/AppContext';
-import { categorizeIngredients } from "../../utils/ingredientsUtils";
+import { categorizeIngredients, categorizedIng } from "../../utils/ingredientsUtils";
 import {getRecipesSuggestionList} from "../../services/api"
 import Recipes from "../Recipes/Recipes";
+import { data } from "react-router-dom";
 
 export default function FridgeIngredients() {
 
@@ -13,41 +14,49 @@ export default function FridgeIngredients() {
   const [categorized, setCategorized] = useState({ inFridge: [], toBuy: [] });
   const [recipes, setRecipes] = useState([]);
   const [fetchError, setFetchError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true)
 
   //ingredient in fridge 
   //must be returned from backend 
+  // const ingIA = [
+  //   { name: "peppers" },
+  //   { name: "salmon" },
+  //   { name: "lime" },
+  //   {name: "cabbage"}, 
+  //   {name: "spinach leaves"},
+  //   {name: "parsnip"},
+  //   {name: "olives"}, 
+  //   {name: "chilies"}, 
+  //   {name: "plum tomatoes"}, 
+  //   {name: "potatoes"}, 
+  //   {name: "eggs"},
+  //   {name: "braggs liquid aminos"},
+  //   {name: "sweet potatoes"},
+  //   {name: "a squirt sriracha"},
+  //   {name: "block lite tofu"},
+  //   {name: "rocket leaves"},
+  //   {name: "grapeseed oil"},
+  //   {name: "chorizo"},
+  //   {name: "vegetables"},
+  //   {name: "beef short ribs"},
+  //   {name: "seasoning"},
+  //   {name: "greens"},
+  //   {name: "ground beef"},
+  //   {name: "herbs de provence"},
+  //   {name: "lemon"},
+  //   {name: "short"},
+  // ];  
   const ingIA = [
-    { name: "peppers" },
-    { name: "salmon" },
-    { name: "lime" },
-    {name: "cabbage"}, 
-    {name: "spinach leaves"},
-    {name: "parsnip"},
-    {name: "olives"}, 
-    {name: "chilies"}, 
-    {name: "plum tomatoes"}, 
-    {name: "potatoes"}, 
-    {name: "eggs"},
-    {name: "braggs liquid aminos"},
-    {name: "sweet potatoes"},
-    {name: "a squirt sriracha"},
-    {name: "block lite tofu"},
-    {name: "rocket leaves"},
-    {name: "grapeseed oil"},
-    {name: "chorizo"},
-    {name: "vegetables"},
-    {name: "beef short ribs"},
-    {name: "seasoning"},
-    {name: "greens"},
-    {name: "ground beef"},
-    {name: "herbs de provence"},
-    {name: "lemon"},
-    {name: "short"},
-  ];  
-
+    
+      {name: "chorizo"},
+      {name: "a squirt sriracha"},
+     {name: "block lite tofu"},
+     {name: "rocket leaves"},
+     {name: "lemon"},
+      ]; 
   useEffect(() => {
     if (!loading && !error) {
-      const result = categorizeIngredients(sharedVariable, ingIA);
+      const result = categorizedIng(sharedVariable, ingIA);
       setCategorized(result);
     }
   }, [sharedVariable, loading, error]); 
@@ -59,7 +68,6 @@ export default function FridgeIngredients() {
           const data = await getRecipesSuggestionList(
             categorized.inFridge.map((ing) => ing.name)
           );
-          console.log("Fetched recipes:", data);  
           if (data.error) {
             setFetchError(data.error);  
           } else {
@@ -68,15 +76,15 @@ export default function FridgeIngredients() {
         } catch (err) {
           // Axios returned value 
           if (err.response) {
-            console.error("Server Error:", err.response);
             setFetchError(`Erreur serveur : ${err.response.status} - ${err.response.data.error || "Erreur inconnue"}`);
           } else if (err.request) {
-            console.error("No Response:", err.request);
             setFetchError("Erreur : Impossible de joindre le serveur.");
           } else {
-            console.error("Request Error:", err.message);
             setFetchError(`Erreur de requête : ${err.message}`);
           }
+        }
+        finally {
+          setIsLoading(false)
         }
       };
   
@@ -115,7 +123,12 @@ export default function FridgeIngredients() {
           </div>
         
         </div>
-          <Recipes listRecipes={recipes} previousPage='recipesSuggestion' />
+        {isLoading ? (
+            <div>Chargement des recettes...</div>
+          ) : (
+            <Recipes listRecipes={recipes} previousPage='recipesSuggestion' />
+          )}
+
           
    </>
         

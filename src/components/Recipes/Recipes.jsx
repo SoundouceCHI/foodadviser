@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export default function Recipes({ limit, random, listRecipes=[], previousPage=''}) { 
   const [recipes, setRecipes] = useState([]); 
   const [error, setError] = useState(null);   
-  console.log(listRecipes.length)
+  
 
   if(previousPage.length == 0){
     previousPage='Home'
@@ -47,7 +47,7 @@ export default function Recipes({ limit, random, listRecipes=[], previousPage=''
   } else if (limit) {
     displayedRecipes = recipes.slice(0, limit);
   }
-  
+
 
   return (
     <div className="container">
@@ -58,11 +58,18 @@ export default function Recipes({ limit, random, listRecipes=[], previousPage=''
           displayedRecipes.map((recipe, index) => (
             <div key={index} className="card card-recipe">
               <img
-                src={recipe.image_url || toast}
+                src={recipe.image_url || recipe.image || toast}
                 alt={recipe.title || "Recette"}
               />
               <div className="card-content">
-                <Link key={recipe.id_recipe} to={`/recipes/${recipe.id_recipe}?from=${previousPage}`}>
+                <Link key={recipe.id_recipe} 
+                to={{
+                  pathname: `/recipes/${recipe.id_recipe || recipe.id}`,
+                  search: `?from=${previousPage}&missedIng=${encodeURIComponent(
+                    JSON.stringify(recipe.missedIngredients || [])
+                  )}`,
+                }}
+              >
                   <h3>{recipe.title}</h3>
                 </Link>
               </div>

@@ -28,7 +28,6 @@ export const getRecipesSuggestionList = async (ingredientList, number=8)=> {
   try {
     const ingredients= ingredientList.join(',+')
     const url = `${API_BASE_URL}/recipesSuggestion/?list=${ingredients}&number=${number}`;
-    console.log("Request URL:", url);
     const response = await axios.get(url)
     return response.data;
   } catch (error) {
