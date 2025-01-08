@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-// const API_BASE_URL = 'http://127.0.0.1:8000/recipes'; 
+ 
 const API_BASE_URL = 'http://127.0.0.1:8000'; 
 
 // Obtenir une recette par ID
@@ -49,4 +48,19 @@ try {
   console.error('Error fetching autocomplete recipes:', error);
   return { error: error.message };
 }
+};
+
+// Upload d'image
+export const uploadImage = async (formData) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/image_manager/upload/`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erreur lors de l’envoi de l’image :', error);
+    return { error: error.message };
+  }
 };
