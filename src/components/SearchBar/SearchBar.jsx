@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { getRecipesAutocomplete } from "../../services/api"; 
-import toast from "../../assets/toast.webp";
-import { Link } from "react-router-dom";
-import './SearchBar.css';
+import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
-import { ImSpinner11 } from "react-icons/im";
+import './SearchBar.css';
 
 export default function SearchBar() {
   const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false); 
   const [noResults, setNoResults] = useState(false); 
+  const navigate = useNavigate();
 
   const handleSearch = async (e) => {
     e.preventDefault(); 
@@ -18,7 +16,6 @@ export default function SearchBar() {
 
     setLoading(true); 
     setNoResults(false); 
-    setSuggestions([]);
 
     try {
       const data = await getRecipesAutocomplete(query);
@@ -26,7 +23,7 @@ export default function SearchBar() {
         if (data.length === 0) {
           setNoResults(true); 
         } else {
-          setSuggestions(data);
+          navigate('/search-results', { state: { results: data, query } });
         }
       } else {
         console.error('Erreur lors de la récupération des suggestions :', data.error);
@@ -49,46 +46,26 @@ export default function SearchBar() {
     setNoResults(false); 
   };
 
-
   return (
-    <>
-      <div className="search-bar-container">
-        <h1 className="search-container-title">On mange quoi Aujourd’hui ?</h1>
-        <form className="search-bar" onSubmit={handleSearch}>
-          <CiSearch className="search-bar-icon" />
-          <input
-            type="text"
-            placeholder="Recherche..."
-            value={query}
-            onChange={handleChange} 
-            onKeyDown={handleKeyPress}
-            className="search-bar-input"
-          />
-        </form>
-        {loading && (
-          <div className="spinner"><ImSpinner11 /> Recherche...</div> 
-        )}
-        {noResults && !loading && (
-            <p>Aucune recette trouvée pour "<strong>{query}</strong>". Essayez un autre terme.</p>
-        )}
-
-        {suggestions.length > 0 && !loading && (
-          <div className="card-container container">
-            {suggestions.map((suggestion) => {
-              return (
-                <div key={suggestion.id} className="card card-recipe">
-                  <img src={suggestion.image_url} alt={suggestion.title || "Recette"} />
-                  <div className="card-content">
-                    <Link to={`/recipes/${suggestion.id}`}>
-                      <h3>{suggestion.title}</h3>
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </>
+    <div className="search-bar-container abody">
+      <h1 className="search-container-title">On mange quoi Aujourd’hui ?</h1>
+      <form className="search-bar" onSubmit={handleSearch}>
+        <CiSearch className="search-bar-icon" />
+        <input
+          type="text"
+          placeholder="Recherche..."
+          value={query}
+          onChange={handleChange} 
+          onKeyDown={handleKeyPress}
+          className="search-bar-input"
+        />
+      </form>
+      {loading && (
+        <div className="spinner"> Recherche...</div> 
+      )}
+      {noResults && !loading && (
+        <p>Aucune recette trouvée pour "<strong>{query}</strong>". Essayez un autre terme.</p>
+      )}
+    </div>
   );  
 }
