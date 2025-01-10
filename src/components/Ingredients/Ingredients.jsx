@@ -16,7 +16,11 @@ export default function Ingredients({ ingredients }) {
             className="card-image"
           />
           <div className="card-ingredient-content">
+<<<<<<< HEAD
             <h3>{ingredient.ingredient_name || ingredient.name }</h3>
+=======
+            <h3>{ingredient.ingredient_name || ingredient.name}</h3>
+>>>>>>> 10f58fc (ingredient management: toggle add ingrdient to fridgeIng and update state dynamically)
             <p>
               {ingredient.amount} {ingredient.unit || ""}
             </p>
