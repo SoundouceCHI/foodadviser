@@ -6,11 +6,8 @@ import { AppContext } from '../../context/AppContext';
 import { categorizedIng } from "../../utils/ingredientsUtils";
 import { getRecipesSuggestionList } from "../../services/api";
 import Recipes from "../Recipes/Recipes";
-<<<<<<< HEAD
 import { useIngredients } from '../../context/IngredientsContext';
-=======
 import PopUp from "../Popup/PopUp";
->>>>>>> 10f58fc (ingredient management: toggle add ingrdient to fridgeIng and update state dynamically)
 
 export default function FridgeIngredients() {
   const { sharedVariable, loading, error, setInFridge, setToShop } = useContext(AppContext);
@@ -18,65 +15,18 @@ export default function FridgeIngredients() {
   const [categorized, setCategorized] = useState({ inFridge: [], toBuy: [] });
   const [recipes, setRecipes] = useState([]);
   const [fetchError, setFetchError] = useState(null);
-<<<<<<< HEAD
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { fridgeImage } = useContext(AppContext);
   
-
-=======
-  const [isLoading, setIsLoading] = useState(true)
   const [isPopupOpen, setIsPopupOpen] = useState(false); //popup
   const [addedIngredient, setAddedIngredient] = useState("");
 
-  //from back 
-  const [ingIA, setIngIA]  = useState([{name: "chorizo"},
-    {name: "a squirt sriracha"},
-   {name: "block lite tofu"},
-   {name: "rocket leaves"},
-   {name: "lemon"},])
-
-  //ingredient in fridge 
-  //must be returned from backend 
-  // const ingIA = [
-  //   { name: "peppers" },
-  //   { name: "salmon" },
-  //   { name: "lime" },
-  //   {name: "cabbage"}, 
-  //   {name: "spinach leaves"},
-  //   {name: "parsnip"},
-  //   {name: "olives"}, 
-  //   {name: "chilies"}, 
-  //   {name: "plum tomatoes"}, 
-  //   {name: "potatoes"}, 
-  //   {name: "eggs"},
-  //   {name: "braggs liquid aminos"},
-  //   {name: "sweet potatoes"},
-  //   {name: "a squirt sriracha"},
-  //   {name: "block lite tofu"},
-  //   {name: "rocket leaves"},
-  //   {name: "grapeseed oil"},
-  //   {name: "chorizo"},
-  //   {name: "vegetables"},
-  //   {name: "beef short ribs"},
-  //   {name: "seasoning"},
-  //   {name: "greens"},
-  //   {name: "ground beef"},
-  //   {name: "herbs de provence"},
-  //   {name: "lemon"},
-  //   {name: "short"},
-  // ];  
-
->>>>>>> 10f58fc (ingredient management: toggle add ingrdient to fridgeIng and update state dynamically)
   useEffect(() => {
     if (!loading && !error) {
       const result = categorizedIng(sharedVariable, ingredients);  
       setCategorized(result);
     }
-<<<<<<< HEAD
   }, [ingredients, sharedVariable, loading, error]);
-
-=======
-  }, [sharedVariable, loading, error]); 
    
   const togglePopup = () => setIsPopupOpen(!isPopupOpen);
 
@@ -85,7 +35,6 @@ export default function FridgeIngredients() {
       const newIngredients = ingredients.filter(
         (ingredient) => !currentState.inFridge.some((ing) => ing.name === ingredient.name)
       );
->>>>>>> 10f58fc (ingredient management: toggle add ingrdient to fridgeIng and update state dynamically)
   
       if (newIngredients.length === 0) {
         return currentState;
@@ -106,6 +55,7 @@ export default function FridgeIngredients() {
 
   useEffect(() => {
     if (categorized.inFridge.length > 0) {
+      setIsLoading(true)
       const fetchRecipes = async () => {
         setIsLoading(true);
         try {
@@ -161,30 +111,8 @@ export default function FridgeIngredients() {
                 <p>Aucune image disponible.</p>
               )}
           </div>
-<<<<<<< HEAD
-=======
           <div className="ingredients-section">
-            {loading ? (
-              <div className="loading">Chargement...</div>
-            ) : error ? (
-              <div className="error">Erreur : {error.message}</div>
-            ) : (
-              <>
-                <h2>Vous avez comme ingrédient : </h2>
-                <Ingredients ingredients={categorized.inFridge}/>
-              </>
-             
-            )}
-            <div>
-              <button className= 'btn-added' onClick={togglePopup}>Add ingredien</button>
-              <PopUp isOpen={isPopupOpen} close={togglePopup} onSubmit={handlePopupList}/>
-            </div>
-          </div>
-        
->>>>>>> 10f58fc (ingredient management: toggle add ingrdient to fridgeIng and update state dynamically)
-        </div>
-        <div className="ingredients-section">
-          {fetchError ? (
+            {fetchError ? (
             <div className="error">Erreur : {fetchError}</div>
           ) : (
             <>
@@ -192,14 +120,21 @@ export default function FridgeIngredients() {
               <Ingredients ingredients={categorized.inFridge}/>
             </>
           )}
+            <div>
+              <button className= 'btn-added' onClick={togglePopup}>Add ingredien</button>
+              <PopUp isOpen={isPopupOpen} close={togglePopup} onSubmit={handlePopupList}/>
+            </div>
+          </div>
+        
         </div>
+        {isLoading ? (
+          <div>Chargement des recettes...</div>
+        ) : categorized.inFridge.length > 0 ? (
+          <Recipes listRecipes={recipes} previousPage="recipesSuggestion" />
+        ) : (
+          <div>Impossible de faire une suggestion de recette sans ingrédient</div>
+        )}
       </div>
-
-      {isLoading ? (
-        <div>Chargement des recettes...</div>
-      ) : (
-        <Recipes listRecipes={recipes} previousPage="recipesSuggestion" />
-      )}
     </>
   );
 }
