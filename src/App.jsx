@@ -12,11 +12,14 @@ import DetailRecipe from "./pages/DetailRecipe";
 import FridgeIngredients from './components/FridgeIngredients/FridgeIngredients'
 import SearchResults from './pages/SearchResults'
 import { IngredientsProvider } from './context/IngredientsContext'; 
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
 
   return (
+
     <IngredientsProvider>
+        <AuthProvider>
       <div className="app-container">
       <BrowserRouter>
       <Navbar/>
@@ -33,7 +36,9 @@ function App() {
       </BrowserRouter>
       <Footer/>
       </div>
+      </AuthProvider>
     </IngredientsProvider>
+   
   )
 }
 
