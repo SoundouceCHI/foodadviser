@@ -11,26 +11,29 @@ import Register from './components/Register/Register'
 import DetailRecipe from "./pages/DetailRecipe";
 import FridgeIngredients from './components/FridgeIngredients/FridgeIngredients'
 import SearchResults from './pages/SearchResults'
+import { IngredientsProvider } from './context/IngredientsContext'; 
 
 function App() {
 
   return (
-    <div className="app-container">
-     <BrowserRouter>
-     <Navbar/>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/recipes/:recipeId" element={<DetailRecipe />} />
-        <Route path="/toprecipes" element={<TopRecipes />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/recipeSuggestion" element={<FridgeIngredients />} />
-        <Route path="/search-results" element={<SearchResults />} />
-      </Routes>
-     </BrowserRouter>
-     <Footer/>
-    </div>
+    <IngredientsProvider>
+      <div className="app-container">
+      <BrowserRouter>
+      <Navbar/>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/recipes" element={<Recipes />} />
+          <Route path="/recipes/:recipeId" element={<DetailRecipe />} />
+          <Route path="/toprecipes" element={<TopRecipes />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/recipeSuggestion" element={<FridgeIngredients />} />
+          <Route path="/search-results" element={<SearchResults />} />
+        </Routes>
+      </BrowserRouter>
+      <Footer/>
+      </div>
+    </IngredientsProvider>
   )
 }
 
