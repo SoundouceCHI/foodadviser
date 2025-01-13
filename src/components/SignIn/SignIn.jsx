@@ -1,53 +1,71 @@
-import React from 'react'
+import React , {useState, useContext} from 'react'
 import './SignIn.css'
-import { NavLink } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
+import authService from "../../services/authentication_service";
+import { AuthContext } from "../../context/AuthContext";
 
 
 export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext); 
+
+  const handleSubmit = async () => {
+    try {
+      const user = await authService.login(email, password); 
+      login(user)
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
-    <div className='mainContainer'>
-      <div className='titleContainer'>
-        <div>SE CONNECTER</div>
-      </div>
-      <br />
-      <div className='inputContainer'>
+    <div className="mainContainer">
+    <div className="titleContainer">
+      <div>SE CONNECTER</div>
+    </div>
+    <br />
+    <div className="inputContainer">
+      <input
+        value={email}
+        placeholder="Pseudo"
+        onChange={(e) => setEmail(e.target.value)}
+        className="inputBox"
+      />
+    </div>
+    <br />
+    <div className="inputContainer">
+      <input
+        type="password"
+        value={password}
+        placeholder="Mot de passe"
+        onChange={(e) => setPassword(e.target.value)}
+        className="inputBox"
+      />
+    </div>
+    <br />
+    <a href="#">Mot de passe oublié ?</a>
+    {error && <p className="errorLabel">{error}</p>}
+    <div>
+      <div className="buttonContainer">
         <input
-        //   value={email}
-          placeholder="Email ou pseudo"
-        //   onChange={()}
-          className='inputBox'
+          className="inputButton"
+          type="button"
+          value="Se connecter"
+          onClick={handleSubmit}
         />
-        {/* <label className="errorLabel">{emailError}</label> */}
-      </div>
-      <br />
-      <div className='inputContainer'>
-        <input
-        //   value={password}
-          placeholder="Mot de passe"
-        //   onChange={()}
-          className='inputBox'
-        />
-        {/* <label className="errorLabel">{passwordError}</label> */}
-      </div>
-      <br />
-      <a>Mot de passe oublié ?</a>
-      <div>
-        <div className="buttonContainer">
-            <input
+        <NavLink to={"/register"}>
+          <input
             className="inputButton"
             type="button"
-            value="Se connecter"
-            />
-            <NavLink to={"/register"}>
-              <input
-              className="inputButton"
-              type="button"
-              value="Créer un compte"
-              />
-            </NavLink>
-        </div>
+            value="Créer un compte"
+          />
+        </NavLink>
       </div>
-
     </div>
-  )
+  </div>
+);
 }

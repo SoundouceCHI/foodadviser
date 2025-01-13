@@ -1,11 +1,18 @@
-import { useRef } from "react";
+import { useRef, useContext, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./Navbar.css";
 import logo from "../../assets/foodAdviser_logo.png";
 import { NavLink } from "react-router-dom"
+import LogoutButton from "../LogoutButton/LogoutButton";
+import authService from "../../services/authentication_service";
+import { AuthContext } from "../../context/AuthContext";
+ 
+
 
 function Navbar() {
 	const navRef = useRef();
+	const { isLoggedIn, user } = useContext(AuthContext);
+	console.log("User Connecté : ", isLoggedIn)
 
 	const showNavbar = () => {
 		navRef.current.classList.toggle("responsive_nav");
@@ -23,9 +30,13 @@ function Navbar() {
 					<NavLink to={"/toprecipes"} className="a">Les meilleurs recettes</NavLink>
 				</div>
 				<div className="connexion-container">
-					<NavLink to={"/signin"}>
+				{isLoggedIn ? (
+						<LogoutButton />
+					) : (
+						<NavLink to={"/signin"}>
 						<button>Connexion</button>
-					</NavLink>
+						</NavLink>
+					)}
 				</div>
 				<button
 					className="nav-btn nav-close-btn"

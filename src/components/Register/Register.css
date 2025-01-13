@@ -226,3 +226,18 @@
 a {
   font-size: 12px; 
 }
+
+.errorLabel {
+  color: red;
+  font-size: 0.9rem;
+}
+
+.successLabel {
+  color: green;
+  font-size: 0.9rem;
+}
+
+.genderButton.selected {
+  background-color: #4caf50;
+  color: white;
+}
