@@ -1,7 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { uploadImage } from '../../services/api';
 import './ImageManager.css';
 import { AiOutlineUpload, AiOutlineCamera } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom'; 
+import { useIngredients } from '../../context/IngredientsContext';
+import { AppContext } from '../../context/AppContext';
 
 const ImageManager = () => {
   const [image, setImage] = useState(null);
@@ -11,33 +14,40 @@ const ImageManager = () => {
   const canvasRef = useRef(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [photoBlob, setPhotoBlob] = useState(null);
+  const navigate = useNavigate(); 
+  const { setIngredients } = useIngredients();
+  const { setFridgeImage } = useContext(AppContext);
 
-  // Gestion de l'upload de fichier
   const handleFileChange = (e) => {
-    const selectedImage = e.target.files[0];
-    setImage(selectedImage);
-    setImageSelected(true);
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      setImageSelected(true);
+  
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFridgeImage(reader.result); 
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  // Soumettre une image (générique)
-    const handleSubmit = async (imageFile) => {
-        if (!imageFile) return;
-    
-        const formData = new FormData();
-        if (imageFile instanceof Blob) {
-        formData.append('image', imageFile, 'photo.png'); 
-        } else {
-        formData.append('image', imageFile);
-        }
-    
-        const result = await uploadImage(formData); 
-        if (result.error) {
-        setMessage('Échec de l’envoi de l’image.');
-        } else {
-        setMessage('Image envoyée avec succès !');
-        }
-    };
+  const handleSubmit = async (imageFile) => {
+    if (!imageFile) return;
   
+    const formData = new FormData();
+    formData.append('image', imageFile instanceof Blob ? imageFile : image);
+  
+    const result = await uploadImage(formData);
+    if (result.error) {
+      setMessage('Échec de l’envoi de l’image.');
+    } else {
+      setMessage('Image envoyée avec succès !');
+      const detectedIngredients = result.detected_objects.map(obj => ({ name: obj.name }));
+      setIngredients(detectedIngredients); 
+      navigate('/recipeSuggestion'); 
+    }
+  };
   
 
   // Démarrer la caméra
@@ -72,7 +82,7 @@ const ImageManager = () => {
 
   // Prendre une photo
   const takePhoto = async () => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || !canvasRef.current) return;
   
     const canvas = canvasRef.current;
     const video = videoRef.current;
@@ -84,6 +94,13 @@ const ImageManager = () => {
   
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
     setPhotoBlob(blob);
+  
+    const reader = new FileReader();
+    reader.onload = () => {
+      setFridgeImage(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  
     setMessage('Photo capturée avec succès.');
   };
   
