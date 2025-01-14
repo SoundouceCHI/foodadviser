@@ -104,37 +104,38 @@ export default function FridgeIngredients() {
       <div className="fridge-page">
         <div className="photo-section">
           <div className="container">
-          <h2>Photo de votre frigo</h2>
-              {fridgeImage ? (
-                <img src={fridgeImage} alt="Fridge contents" className="img-fridge-photo" />
-              ) : (
-                <p>Aucune image disponible.</p>
-              )}
-          </div>
-          <div className="ingredients-section">
+            <h2>Photo de votre frigo</h2>
+            {fridgeImage ? (
+              <img src={fridgeImage} alt="Fridge contents" className="img-fridge-photo" />
+            ) : (
+              <p>Aucune image disponible.</p>
+            )}
+
+            </div>
+            </div>
+
+            <div className="ingredients-section">
             {fetchError ? (
-            <div className="error">Erreur : {fetchError}</div>
-          ) : (
-            <>
-              <h2>Vous avez comme ingrédient :</h2>
-              <Ingredients ingredients={categorized.inFridge}/>
-            </>
-          )}
+              <div className="error">Erreur : {fetchError}</div>
+            ) : (
+              <>
+                <h2>Vous avez comme ingrédient :</h2>
+                <Ingredients ingredients={categorized.inFridge} />
+              </>
+            )}
             <div>
-              <button className= 'btn-added' onClick={togglePopup}>Add ingredien</button>
-              <PopUp isOpen={isPopupOpen} close={togglePopup} onSubmit={handlePopupList}/>
+              <button className='btn-added' onClick={togglePopup}>Add ingredient</button>
+              <PopUp isOpen={isPopupOpen} close={togglePopup} onSubmit={handlePopupList} />
             </div>
           </div>
-        
-        </div>
-        {isLoading ? (
+          </div>
+      {isLoading ? (
           <div>Chargement des recettes...</div>
         ) : categorized.inFridge.length > 0 ? (
           <Recipes listRecipes={recipes} previousPage="recipesSuggestion" />
         ) : (
           <div>Impossible de faire une suggestion de recette sans ingrédient</div>
         )}
-      </div>
     </>
   );
 }
