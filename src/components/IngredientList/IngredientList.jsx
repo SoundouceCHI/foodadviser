@@ -1,13 +1,17 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import { AppContext } from '../../context/AppContext';
 import './IngredientList.css'
 import toast from "../../assets/toast.webp";
 
-export default function IngredientList({addOrRemoveIng}) {
+export default function IngredientList({addOrRemoveIng, confirmedIngredients}) {
   const { sharedVariable} = useContext(AppContext);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; 
   const [addedIngrediendList, setAddedIngredient]= useState([])
+
+  useEffect(() => {
+    setAddedIngredient(confirmedIngredients || []);
+  }, [confirmedIngredients]);
 
   //nb pages 
   const totalPages = Math.ceil(sharedVariable.length / itemsPerPage);

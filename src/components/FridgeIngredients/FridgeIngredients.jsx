@@ -49,7 +49,21 @@ export default function FridgeIngredients() {
   };
 
   const handlePopupList = (addedIngredientList) => {
-    addIngredients(addedIngredientList)
+    setCategorized((currentState) => {
+      const updatedInFridge = currentState.inFridge.filter(
+        (ing) => addedIngredientList.some((newIng) => newIng.name === ing.name)
+      );
+  
+      const newIngredients = addedIngredientList.filter(
+        (ing) => !updatedInFridge.some((existingIng) => existingIng.name === ing.name)
+      );
+  
+      return {
+        ...currentState,
+        inFridge: [...updatedInFridge, ...newIngredients],
+      };
+    });
+  
     togglePopup();
   };
 
@@ -125,7 +139,7 @@ export default function FridgeIngredients() {
             )}
             <div>
               <button className='btn-added' onClick={togglePopup}>Add ingredient</button>
-              <PopUp isOpen={isPopupOpen} close={togglePopup} onSubmit={handlePopupList} />
+              <PopUp isOpen={isPopupOpen} close={togglePopup} onSubmit={handlePopupList}  confirmedIngredients={categorized.inFridge} />
             </div>
           </div>
           </div>

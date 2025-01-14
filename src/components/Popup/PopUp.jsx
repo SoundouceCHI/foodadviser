@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import "./PopUp.css";
 import IngredientList from "../ingredientList/IngredientList";
 
-function PopUp({ isOpen, close,onSubmit}) {
+function PopUp({ isOpen, close,onSubmit, confirmedIngredients}) {
 
   const handleIngredientAdd = (ingredient) => {
     if (onSubmit) {
@@ -17,7 +17,7 @@ function PopUp({ isOpen, close,onSubmit}) {
           <button onClick={close} className="close-button">Fermer</button>
         </div>
         <div className="popup-content">
-          <IngredientList addOrRemoveIng={handleIngredientAdd} />
+          <IngredientList addOrRemoveIng={handleIngredientAdd} confirmedIngredients={confirmedIngredients} />
         </div>
       </div>
     </div>
