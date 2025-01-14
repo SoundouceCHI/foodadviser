@@ -5,6 +5,7 @@ import { AiOutlineUpload, AiOutlineCamera } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom'; 
 import { useIngredients } from '../../context/IngredientsContext';
 import { AppContext } from '../../context/AppContext';
+import { AuthContext } from '../../context/AuthContext';
 
 const ImageManager = () => {
   const [image, setImage] = useState(null);
@@ -18,6 +19,8 @@ const ImageManager = () => {
   const { setIngredients } = useIngredients();
   const { setFridgeImage } = useContext(AppContext);
 
+  const { isLoggedIn, user } = useContext(AuthContext);
+  // Gestion de l'upload de fichier
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -106,7 +109,10 @@ const ImageManager = () => {
   
 
   return (
-    <div className="upload-container">
+    <>
+    {isLoggedIn && (
+      
+      <div className="upload-container">
       <h1 className='title-upload-image'>Quels aliments avez-vous ?</h1>
       <label htmlFor="file-input" className="upload-icon" title="Uploader une image">
         <AiOutlineUpload />
@@ -152,6 +158,8 @@ const ImageManager = () => {
       {image && <p>{image.name}</p>}
       {message && <p>{message}</p>}
     </div>
+    )}
+    </>
   );
 };
 
