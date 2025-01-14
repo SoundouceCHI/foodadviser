@@ -1,7 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { uploadImage } from '../../services/api';
 import './ImageManager.css';
 import { AiOutlineUpload, AiOutlineCamera } from 'react-icons/ai';
+import { AuthContext } from '../../context/AuthContext';
+import isAuthenticated from '../../services/authentication_service'
 
 const ImageManager = () => {
   const [image, setImage] = useState(null);
@@ -12,6 +14,8 @@ const ImageManager = () => {
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [photoBlob, setPhotoBlob] = useState(null);
 
+  const { isLoggedIn, user } = useContext(AuthContext);
+  console.log(isAuthenticated)
   // Gestion de l'upload de fichier
   const handleFileChange = (e) => {
     const selectedImage = e.target.files[0];
@@ -89,7 +93,10 @@ const ImageManager = () => {
   
 
   return (
-    <div className="upload-container">
+    <>
+    {isLoggedIn && (
+      
+      <div className="upload-container">
       <h1 className='title-upload-image'>Quels aliments avez-vous ?</h1>
       <label htmlFor="file-input" className="upload-icon" title="Uploader une image">
         <AiOutlineUpload />
@@ -135,6 +142,8 @@ const ImageManager = () => {
       {image && <p>{image.name}</p>}
       {message && <p>{message}</p>}
     </div>
+    )}
+    </>
   );
 };
 

@@ -11,7 +11,6 @@ export const AuthProvider = ({ children }) => {
     const accessToken = authService.getAccessToken();
     if (accessToken) {
       setIsLoggedIn(true);
-      console.log("username : ", username)
       setUser("inconnu"); 
     } else {
       setIsLoggedIn(false);
