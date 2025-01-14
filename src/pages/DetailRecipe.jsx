@@ -8,6 +8,8 @@ import "../styles/DetailRecipe.css";
 import { useLocation } from 'react-router-dom';
 import { categorizeIngredients } from "../utils/ingredientsUtils";
 import {mapMissedIngredients} from "../utils/ingredientsUtils.jsx"
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 export default function DetailRecipe() {
   const { recipeId } = useParams();
@@ -68,6 +70,31 @@ export default function DetailRecipe() {
     setInFridge(localIngInFridge)
   };
 
+  const downloadShoppingList = () => {
+    const doc = new jsPDF();
+    doc.text("Liste de course", 10, 10);
+    const filteredIngredients = localEnrichedIngredients.filter((ingredient) => {
+      const ingredientName = ingredient.name || ingredient.ingredient_name;
+      return ingredientName && !ingredientName.toLowerCase().includes("ingrédient inconnu");
+    });
+    
+
+    if (filteredIngredients.length > 0) {
+      const rows = filteredIngredients.map((ingredient) => [
+        ingredient.name || ingredient.ingredient_name,
+      ]);
+      console.log("rows : ", rows)
+      doc.autoTable({
+        head: [["Ingrédient"]],
+        body: rows,
+      });
+    } else {
+      doc.text("Aucun ingrédient dans la liste de course.", 10, 30);
+    }
+
+    doc.save("liste_de_course.pdf");
+  };
+
   if (error) {
     return <p className="error-message">{error}</p>;
   }
@@ -95,6 +122,23 @@ export default function DetailRecipe() {
               <Ingredients ingredients={localIngInFridge} showRemoveButton={true} onMoveIngredient={moveToShoppingList}/>
               <h3 className="titlee">Liste de course</h3>
               <Ingredients ingredients={localEnrichedIngredients} showRemoveButton={true} onMoveIngredient={moveToFridge}/>
+              { localEnrichedIngredients.length > 0 && (
+                <button  style={{
+                  backgroundColor: "#45AA6D",
+                  color: "white",
+                  padding: "10px 20px",
+                  textAlign: "center",
+                  textDecoration: "none",
+                  display: "inline-block",
+                  fontSize: "16px",
+                  margin: "10px 0",
+                  cursor: "pointer",
+                  border: "none",
+                  borderRadius: "5px",
+                }} onClick={downloadShoppingList}>
+                  Télécharger
+                </button>
+              )}
             </>
       )}
       <h3 className="titlee">Étapes </h3>
