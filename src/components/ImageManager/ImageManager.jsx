@@ -46,7 +46,8 @@ const ImageManager = () => {
       setMessage('Échec de l’envoi de l’image.');
     } else {
       setMessage('Image envoyée avec succès !');
-      const detectedIngredients = result.detected_objects.map(obj => ({ name: obj.name }));
+      const parsedResult = JSON.parse(result.detected_objects);
+      const detectedIngredients = parsedResult.map(obj => ({ name: obj.name }));
       setIngredients(detectedIngredients); 
       navigate('/recipeSuggestion'); 
     }
