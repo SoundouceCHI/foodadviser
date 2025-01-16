@@ -89,4 +89,8 @@
       width: calc(100% - 40px);
     }
   }
-  
+  @media (max-width: 768px) {
+    .search-container-title {
+      font-size: 24px; 
+    }
+  }

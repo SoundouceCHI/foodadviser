@@ -1,3 +1,4 @@
+/* Conteneur des cartes de recettes */
 .card-container {
     display: flex;
     justify-content: center;
@@ -5,17 +6,33 @@
     margin-top: 10px;
 }
 
+/* Titre des recettes */
 .title-recipes {
     margin-top: 30px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
 }
 
+/* Style des cartes de recette */
 .card {
     width: calc(25% - 40px); 
     border-radius: 20px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
     margin: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.marginr {
+    margin-bottom: 10px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Image de la recette */
 .card img {
     width: 100%;
     height: auto;
@@ -23,6 +40,7 @@
     border-top-right-radius: 20px;
 }
 
+/* Contenu de la carte (titre, etc.) */
 .card-content {
     margin: 10px 0;
     font-size: 18px;
@@ -30,17 +48,55 @@
     color: #333;
 }
 
+/* Animation de l'effet de survol de la carte */
 .card-recipe:hover {
     transform: scale(1.05);
 }
 
+/* Effet de chargement sous forme de spinner */
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3; /* Couleur de fond de l'anneau */
+    border-top: 5px solid #4caf50; /* Couleur de l'anneau qui tourne */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+    display: block;
+}
 
+/* Animation de rotation du spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Style des erreurs */
+.error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsivité pour les tablettes et plus petits écrans */
 @media (max-width: 1024px) {
     .card {
         width: calc(50% - 40px); 
     }
+
     .container {
         max-width: 964px;
     }
 }
 
+/* Responsivité pour les écrans mobiles */
+@media (max-width: 768px) {
+    .card {
+        width: calc(100% - 40px); 
+    }
+
+    .container {
+        max-width: 720px;
+    }
+}

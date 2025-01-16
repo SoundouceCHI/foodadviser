@@ -50,7 +50,7 @@ export default function Recipes({ limit, random, listRecipes=[], previousPage=''
 
 
   return (
-    <div className="container">
+    <div className="container marginr">
       <h2 className="title-recipes">Nos recettes</h2>
       {error && <p className="error-message">{error}</p>}
       <div className="card-container">
@@ -68,17 +68,17 @@ export default function Recipes({ limit, random, listRecipes=[], previousPage=''
                   search: `?from=${previousPage}&missedIng=${encodeURIComponent(
                     JSON.stringify(recipe.missedIngredients || [])
                   )}`,
-                }}
-              >
+                }}>
                   <h3>{recipe.title}</h3>
                 </Link>
               </div>
             </div>
           ))
         ) : (
-          <div className="loading-spinner">Chargement des recettes...</div>
+          <div className="loading-spinner"></div>
         )}
       </div>
+
     </div>
   );
 }

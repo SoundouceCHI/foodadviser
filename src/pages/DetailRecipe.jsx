@@ -106,7 +106,7 @@ export default function DetailRecipe() {
   }
 
   if (!recipeDetails) {
-    return <p>Chargement des détails de la recette...</p>;
+    return <div className="loading-spinner marginn"></div>;
   }
 
   const ingredients = recipeDetails.ingredients || recipeDetails.extendedIngredients || []

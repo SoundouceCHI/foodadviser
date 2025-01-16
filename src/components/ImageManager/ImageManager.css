@@ -24,7 +24,9 @@
   }
 
   .title-upload-image {
+    text-align: center; 
     color: #45AA6D;
+    font-size: 32px;
   }
   
   .hidden-input {
@@ -63,3 +65,8 @@
     margin-top: 20px;
   }
   
+  @media (max-width: 768px) {
+    .title-upload-image {
+      font-size: 24px; 
+    }
+  }

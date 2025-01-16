@@ -1,7 +1,15 @@
+/* Style par défaut (pour les grands écrans) */
 .aabody {
-    padding: 83px;
-    background-image: url("../assets/background.png");
-    background-size: 100% auto;
-    background-position: right 35% bottom 66%;
-    background-repeat: no-repeat; 
+  padding: 83px;
+  background-image: url("../assets/background.png");
+  background-size: 100% auto;
+  background-position: right 35% bottom 66%;
+  background-repeat: no-repeat; 
+}
+
+/* Modifications pour les écrans petits (par exemple, les écrans mobiles) */
+@media (max-width: 768px) {
+  .aabody {
+    background-image: none; /* Supprime l'image de fond pour les écrans mobiles */
   }
+}

@@ -42,7 +42,7 @@ export default function TopRecipes() {
   }, []);
 
   if (loading) {
-    return <p>Chargement des recettes...</p>;
+    return <div className="loading-spinner"></div>;
   }
 
   if (!authService.getAccessToken()) {

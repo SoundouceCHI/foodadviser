@@ -144,7 +144,7 @@ export default function FridgeIngredients() {
           </div>
           </div>
       {isLoading ? (
-          <div>Chargement des recettes...</div>
+          <div className="loading-spinner"></div>
         ) : categorized.inFridge.length > 0 ? (
           <Recipes listRecipes={recipes} previousPage="recipesSuggestion" />
         ) : (
