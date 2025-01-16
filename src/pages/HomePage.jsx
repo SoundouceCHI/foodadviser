@@ -12,7 +12,7 @@ export default function HomePage() {
         <SearchBar/>
         <ImageManager/>
       </div>
-      <Recipes limit={4} random={true} />
+      <Recipes limit={8} random={true} />
       <TopRecipes />
     </>
   );
