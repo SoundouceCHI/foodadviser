@@ -1,24 +1,25 @@
 import React, { useEffect, useState, useContext } from "react";
-import { AppContext } from '../context/AppContext';
+import { AppContext } from "../context/AppContext";
 import { useParams } from "react-router-dom";
-import { getRecipeById } from "../services/api";
+import { getRecipeById, viewRecipe } from "../services/api"; // Import de la nouvelle fonction
 import Ingredients from "../components/Ingredients/Ingredients.jsx";
 import RecipeSteps from "../components/RecipeSteps/RecipeSteps.jsx";
 import "../styles/DetailRecipe.css";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import { categorizeIngredients } from "../utils/ingredientsUtils";
 import {mapMissedIngredients} from "../utils/ingredientsUtils.jsx"
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import authService from "../services/authentication_service.jsx";
 
 export default function DetailRecipe() {
   const { recipeId } = useParams();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const fromPage = params.get('from');
+  const fromPage = params.get("from");
   const missedIng = params.get("missedIng")
-  ? JSON.parse(params.get("missedIng"))
-  : [];
+    ? JSON.parse(params.get("missedIng"))
+    : [];
 
 
   let isSuggestionPage = fromPage.includes('recipesSuggestion')
@@ -34,14 +35,21 @@ export default function DetailRecipe() {
   useEffect(() => {
     const fetchRecipeDetailsWithIngredients = async () => {
       try {
+
         const data = await getRecipeById(recipeId);
         if (data.error) {
           setError(data.error);
-          return 
-        } 
-
+          return;
+        }
+        
         setRecipeDetails(data);
-        // Fetch enriched ingredients only if needed
+        
+        if (authService.isAuthenticated()) {
+          await viewRecipe(data.title);
+        } else {
+          console.log("Utilisateur non connecté : pas d'enregistrement des recettes consultées.");
+        }
+        
         const data_ingredient= (data?.ingredients || data?.extendedIngredients)
         if (missedIng.length > 0 && data_ingredient.length > 0 ) {
           const enriched = await mapMissedIngredients(missedIng, data_ingredient);
@@ -54,19 +62,17 @@ export default function DetailRecipe() {
     };
 
     fetchRecipeDetailsWithIngredients();
-  }, []);
+  }, [recipeId]); 
 
   const moveToShoppingList = (ingredient) => {
     setLocalIngInFridge((prev) => prev.filter((item) => item !== ingredient));
     setLocalEnrichedIngredients((prev) => [...prev, ingredient]);
-    //set context variables 
     setInFridge(localIngInFridge)
   };
 
   const moveToFridge = (ingredient) => {
     setLocalEnrichedIngredients((prev) => prev.filter((item) => item !== ingredient));
     setLocalIngInFridge((prev) => [...prev, ingredient]);
-    //set context variables 
     setInFridge(localIngInFridge)
   };
 

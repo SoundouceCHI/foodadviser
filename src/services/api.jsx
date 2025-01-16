@@ -1,4 +1,5 @@
 import axios from 'axios';
+import authService from "./authentication_service";
  
 const API_BASE_URL = 'http://127.0.0.1:8000'; 
 
@@ -62,5 +63,24 @@ export const uploadImage = async (formData) => {
   } catch (error) {
     console.error('Erreur lors de l’envoi de l’image :', error);
     return { error: error.message };
+  }
+};
+
+export const viewRecipe = async (recipeTitle) => {
+  try {
+    const token = authService.getAccessToken(); // Récupère le token
+    const response = await axios.post(
+      `${API_BASE_URL}/recommandations/view_recipe/${recipeTitle}/`,
+      {}, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de l'enregistrement de la recette consultée :", error);
+    throw error;
   }
 };
