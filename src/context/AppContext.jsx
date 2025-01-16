@@ -12,6 +12,7 @@ const AppProvider = ({ children }) => {
 
     const [ingInFridge, setInFridge]= useState([])
     const [ingToShop, setToShop]= useState([])
+    const [userIngToShop, setuserIngToShop]= useState([])
     const [fridgeImage, setFridgeImage] = useState(null);
 
     useEffect(() => {
@@ -30,7 +31,7 @@ const AppProvider = ({ children }) => {
     }, []);  
 
     return (
-        <AppContext.Provider value={{ sharedVariable, loading, error, ingInFridge, ingToShop, setInFridge, setToShop, fridgeImage, setFridgeImage,}}>
+        <AppContext.Provider value={{ sharedVariable, loading, error, ingInFridge, ingToShop, setInFridge, setToShop, fridgeImage, setFridgeImage,setuserIngToShop, userIngToShop}}>
             {children}
         </AppContext.Provider>
     );

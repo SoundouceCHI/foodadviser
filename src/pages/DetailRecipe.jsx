@@ -25,7 +25,7 @@ export default function DetailRecipe() {
   let isSuggestionPage = fromPage.includes('recipesSuggestion')
 
 
-  const { setToShop, ingToShop, setInFridge, ingInFridge} = useContext(AppContext);
+  const { setuserIngToShop, userIngToShop, setInFridge, ingInFridge} = useContext(AppContext);
   const [localIngInFridge, setLocalIngInFridge] = useState(ingInFridge || []);
   const [localEnrichedIngredients, setLocalEnrichedIngredients] = useState([]);
 
@@ -129,21 +129,51 @@ export default function DetailRecipe() {
               <h3 className="titlee">Liste de course</h3>
               <Ingredients ingredients={localEnrichedIngredients} showRemoveButton={true} onMoveIngredient={moveToFridge}/>
               { localEnrichedIngredients.length > 0 && (
-                <button  style={{
-                  backgroundColor: "#45AA6D",
-                  color: "white",
-                  padding: "10px 20px",
-                  textAlign: "center",
-                  textDecoration: "none",
-                  display: "inline-block",
-                  fontSize: "16px",
-                  margin: "10px 0",
-                  cursor: "pointer",
-                  border: "none",
-                  borderRadius: "5px",
-                }} onClick={downloadShoppingList}>
-                  Télécharger
-                </button>
+                <>
+                  <button
+                    style={{
+                      backgroundColor: "#45AA6D",
+                      color: "white",
+                      padding: "10px 20px",
+                      textAlign: "center",
+                      textDecoration: "none",
+                      display: "inline-block",
+                      fontSize: "16px",
+                      margin: "10px 0",
+                      cursor: "pointer",
+                      border: "none",
+                      borderRadius: "5px",
+                    }}
+                    onClick={downloadShoppingList}
+                  >
+                    Télécharger
+                  </button>
+
+                  <button
+                    style={{
+                      backgroundColor: "#45AA6D",
+                      color: "white",
+                      padding: "10px 20px",
+                      textAlign: "center",
+                      textDecoration: "none",
+                      display: "inline-block",
+                      fontSize: "16px",
+                      margin: "10px 10px",
+                      cursor: "pointer",
+                      border: "none",
+                      borderRadius: "5px",
+                    }}
+                    onClick={() => {
+                      setuserIngToShop((prevUserIngToShop) => {
+                        const updatedList = [...prevUserIngToShop, ...localEnrichedIngredients];
+                        alert("Ingrédients ajoutés à la liste de courses !");
+                        return updatedList; 
+                      });
+                    }}
+                  >
+                    Ajouter à la liste de courses
+                  </button>
+                </>
               )}
             </>
       )}

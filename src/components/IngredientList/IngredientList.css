@@ -97,3 +97,32 @@
   transition: background-color 0.3s;
   margin-top: 30px;
 }
+
+.search-bar-fridge{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+  
+  .search-input {
+    width: 80%;
+    max-width: 500px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .search-input::placeholder {
+    color: #aaa;
+    font-style: italic;
+  }
+  

@@ -138,7 +138,7 @@ export default function FridgeIngredients() {
               </>
             )}
             <div>
-              <button className='btn-added' onClick={togglePopup}>Add ingredient</button>
+              <button className='btn-added' onClick={togglePopup}>Modifier la liste des ingredients</button>
               <PopUp isOpen={isPopupOpen} close={togglePopup} onSubmit={handlePopupList}  confirmedIngredients={categorized.inFridge} />
             </div>
           </div>

@@ -8,15 +8,26 @@ export default function IngredientList({addOrRemoveIng, confirmedIngredients}) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; 
   const [addedIngrediendList, setAddedIngredient]= useState([])
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [filteredIngredients, setFilteredIngredients] = useState([]);
+
 
   useEffect(() => {
     setAddedIngredient(confirmedIngredients || []);
   }, [confirmedIngredients]);
 
+  useEffect(() => {
+    const filtered = sharedVariable.filter(ingredient => 
+      ingredient.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredIngredients(filtered);
+  }, [searchTerm, sharedVariable]);
+
+
   //nb pages 
-  const totalPages = Math.ceil(sharedVariable.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredIngredients.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentIngredients = sharedVariable.slice(startIndex, startIndex + itemsPerPage);
+  const currentIngredients = filteredIngredients.slice(startIndex, startIndex + itemsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -38,6 +49,15 @@ export default function IngredientList({addOrRemoveIng, confirmedIngredients}) {
 
   return (
     <div className="ingredients-container">
+       <div className="search-bar-fridge">
+        <input
+          type="text"
+          placeholder="Rechercher un ingrédient..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+      </div>
     <div className="ingredients-grid">
       {currentIngredients.map((ingredient, index) => (
         <div key={index} className="ingredient-card">
