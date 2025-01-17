@@ -126,3 +126,6 @@ nav {
 	transform: scale(1.05); 
 	transition: transform 0.3s ease, background-color 0.3s ease; 
 }
+.connexion-container button {
+	margin-left: 20px;
+}
