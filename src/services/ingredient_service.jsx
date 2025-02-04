@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = `${process.env.API_URL}ingredients/`;
+const API_BASE_URL = `${process.env.API_URL}/ingredients/`;
 
 export const get_all_ingredients = async () => {
     try {
