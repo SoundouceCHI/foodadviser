@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-let API_BASE_URL =`${import.meta.env.API_BASE_URL}/ingredients/`
-API_BASE_URL =`http://127.0.0.1:8000/ingredients`
+const API_BASE_URL = `${process.env.API_URL}ingredients/`;
 
 export const get_all_ingredients = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/ingredients/list/')
+      const response = await axios.get(`${API_BASE_URL}ingredients/list/`)
       return response.data;
     } catch (error) {
       console.error('Error fetching ingredients:', error)
