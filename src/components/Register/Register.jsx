@@ -26,7 +26,7 @@ export default function Register() {
     }
 
     try {
-      const response = await axios.post(const API_URL = `${process.env.REACT_APP_API_URL}/users/register/`, {
+      const response = await axios.post(`${process.env.API_URL}/users/register/`, {
         email,
         username: pseudo,
         password,
