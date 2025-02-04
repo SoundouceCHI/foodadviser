@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import "./PopUp.css";
-import IngredientList from "../ingredientList/IngredientList";
+import IngredientList from "../IngredientList/IngredientList.jsx";
 
 function PopUp({ isOpen, close,onSubmit, confirmedIngredients}) {
 
