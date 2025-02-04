@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authService from "./authentication_service";
- 
-const API_BASE_URL = 'http://127.0.0.1:8000'; 
+
+const API_BASE_URL= process.env.API_URL; 
 
 // Obtenir une recette par ID
 export const getRecipeById = async (recipeId) => {
